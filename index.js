@@ -149,7 +149,7 @@ function pushCommentToPostList(post) {
 }
 
 function isValidPost(post) {
-  const text = post.get('text')
+  const text = post.get('text').trim()
   if (text.length < 1) {
     return false
   } else {
