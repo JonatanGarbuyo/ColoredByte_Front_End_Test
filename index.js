@@ -89,17 +89,21 @@ function renderUserInfo(userData) {
 }
 
 async function renderImages(post) {
-  const images = await fetchImages(post.imagesUrl)
+  try {
+    const images = await fetchImages(post.imagesUrl)
 
-  images.forEach((image) => {
-    const swiperSlide = document.createElement('img')
-
-    swiperSlide.className = 'swiper-slide'
-    swiperSlide.src = image.download_url
-
-    document.getElementById('swiper-wrapper').appendChild(swiperSlide)
-  })
-  renderSwiper()
+    images.forEach((image) => {
+      const swiperSlide = document.createElement('img')
+      swiperSlide.className = 'swiper-slide'
+      swiperSlide.src = image.download_url
+      document.getElementById('swiper-wrapper').appendChild(swiperSlide)
+    })
+    renderSwiper()
+  } catch (error) {
+    const swiper = document.getElementById('swiper')
+    swiper.innerHTML = `<div>${error.message}</div>`
+    swiper.classList.toggle('skeleton')
+  }
 }
 
 function renderSwiper() {
@@ -182,6 +186,7 @@ async function fetchImages(imagesUrl) {
     const response = await fetch(imagesUrl)
     return response.json()
   } catch (error) {
-    console.log(error.message)
+    console.log(error)
+    throw new Error('Error retrieving images')
   }
 }
