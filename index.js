@@ -1,11 +1,11 @@
 const initialState = {
-  user: {
-    city: 'Buenos Aires',
-    country: 'Argentina',
-    imageUrl: 'https://avatars.githubusercontent.com/u/58077441',
-    name: 'Jonatan Garbuyo',
-  },
   post: {
+    user: {
+      city: 'Buenos Aires',
+      country: 'Argentina',
+      imageUrl: 'https://avatars.githubusercontent.com/u/58077441',
+      name: 'Jonatan Garbuyo',
+    },
     like: false,
     id: 33,
     imagesUrl: 'https://picsum.photos/v2/list?page=22&limit=3',
@@ -33,12 +33,7 @@ document.addEventListener('DOMContentLoaded', function () {
   form.addEventListener('submit', handleSubmit)
   likeButton.addEventListener('click', handleLike)
 
-  let state = getStateFromStorage()
-  if (!state) {
-    state = initialState
-    setStateinStorage(state)
-  }
-  renderPage(state)
+  initialRender(initialState)
 })
 
 // Handler functions
@@ -52,22 +47,17 @@ function handleSubmit(e) {
 }
 
 function handleLike() {
-  const { user, post } = getStateFromStorage()
   const heartIcon = this.firstElementChild
 
-  const newState = {
-    user,
-    post: { ...post, like: !post.like },
-  }
-
-  heartIcon.classList.toggle('likedAnimation', newState.post.like)
+  heartIcon.classList.toggle('likedAnimation')
   heartIcon.classList.toggle('liked')
-  setStateinStorage(newState)
 }
 
 // Helper functions
-async function renderPage(state) {
-  const { user, post } = state
+async function initialRender(state) {
+  const {
+    post: { user, ...post },
+  } = state
 
   renderUserInfo(user)
   renderImages(post)
@@ -155,11 +145,6 @@ function pushCommentToPostList(post) {
       name: '',
     },
   }
-
-  const state = getStateFromStorage()
-  state.post.comments.push(newPost)
-
-  setStateinStorage(state)
   renderComment(newPost)
 }
 
@@ -170,15 +155,6 @@ function isValidPost(post) {
   } else {
     return true
   }
-}
-
-function setStateinStorage(state) {
-  const newState = JSON.stringify(state)
-  localStorage.setItem('coloredByte', newState)
-}
-
-function getStateFromStorage() {
-  return JSON.parse(localStorage.getItem('coloredByte'))
 }
 
 async function fetchImages(imagesUrl) {
