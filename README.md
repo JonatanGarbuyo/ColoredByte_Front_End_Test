@@ -7,6 +7,9 @@ We do this test because a lot of portfolio pieces are made from tutorials and do
 ## How to do the test
 
 1. Open this [Figma file](https://www.figma.com/file/rGPjrHfxYkNY3PyxulJ09c/Front-End-Test?node-id=0%3A1)
+
+![image](https://user-images.githubusercontent.com/58077441/183533268-f91b2374-e68d-479e-8dea-64cd00e1fb19.png)
+
 2. Build this landing page using only HTML, CSS and JS
 3. Submit a **google drive with the ZIP folder and the URL** once you deploy with [https://surge.sh/](https://surge.sh/)
 
